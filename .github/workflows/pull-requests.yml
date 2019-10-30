@@ -1,0 +1,31 @@
+name: PR Check
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install, lint, build, and test
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN" >> .npmrc
+          npm ci
+          npm run lint:ts
+          npm run prettier
+          cd projects/sop-form-viewer
+          echo "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN" >> .npmrc
+          npm ci
+          npm test
+          cd ../..
+          npm run build
+        env:
+          CI: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

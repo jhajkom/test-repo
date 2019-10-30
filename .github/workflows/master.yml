@@ -1,0 +1,36 @@
+name: Build and Deploy
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm build test and publish
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=$GH_TOKEN" >> .npmrc
+          npm ci
+          cd projects/sop-form-viewer
+          echo "//npm.pkg.github.com/:_authToken=$GH_TOKEN" >> .npmrc
+          npm ci
+          npx npm-install-peers
+          npm test
+          cd ../..
+          npm run build
+          npx semantic-release
+        env:
+          CI: true
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+#NOTES:
+
+## 1. Cannot cache between steps: https://github.community/t5/GitHub-Actions/Caching-files-between-GitHub-Action-executions/m-p/30974/highlight/true#M630

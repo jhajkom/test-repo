@@ -1,0 +1,16 @@
+release:
+  branch: master
+plugins:
+  - "@semantic-release/commit-analyzer"
+  - "@semantic-release/release-notes-generator"
+  - "@semantic-release/changelog"
+  - - "@semantic-release/npm"
+    - pkgRoot: dist/sop-form-viewer
+      npmPublish: true
+  - - "@semantic-release/exec"
+    - prepareCmd: "VERSION=${nextRelease.version} npm run adjust-version"
+  - - "@semantic-release/git"
+    - assets:
+        - "package.json"
+        - "projects/sop-form-viewer/package.json"
+        - "CHANGELOG.md"

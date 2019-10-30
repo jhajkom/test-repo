@@ -1,0 +1,65 @@
+{
+  "name": "@jhajkom/sop-form-viewer",
+  "version": "1.0.1",
+  "scripts": {
+    "build": "ng build --project sop-form-viewer",
+    "test": "echo 'no tests currently configured.'",
+    "prettier": "prettier --config .prettierrc.json --write 'projects/**/*.{ts,component.html}'",
+    "lint:ts": "eslint --fix projects/**/*.ts",
+    "semantic-release": "semantic-release",
+    "adjust-version": "npm-run-all adjust-version:*",
+    "adjust-version:lib": "rjp projects/sop-form-viewer/package.json version $VERSION",
+    "adjust-version:main": "rjp package.json version $VERSION"
+  },
+  "private": false,
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "dependencies": {
+    "@angular/common": "~8.2.10",
+    "@angular/compiler": "~8.2.10",
+    "@angular/core": "~8.2.10",
+    "@angular/platform-browser": "~8.2.10",
+    "@angular/platform-browser-dynamic": "~8.2.10",
+    "@angular-devkit/build-angular": "^0.803.8",
+    "@angular-devkit/build-ng-packagr": "^0.803.8",
+    "@angular/router": "~8.2.10",
+    "ng-packagr": "^5.6.1",
+    "core-js": "^3.2.1",
+    "rxjs": "~6.5.3",
+    "tslib": "^1.10.0",
+    "zone.js": "~0.10.2"
+  },
+  "devDependencies": {
+    "@angular/cli": "~8.3.8",
+    "@angular/compiler-cli": "~8.2.10",
+    "@angular/language-service": "~8.2.10",
+    "@commitlint/cli": "8.2.0",
+    "@commitlint/config-angular": "8.2.0",
+    "@commitlint/config-conventional": "8.2.0",
+    "@semantic-release/changelog": "^3.0.4",
+    "@semantic-release/exec": "^3.3.7",
+    "@semantic-release/git": "^7.0.16",
+    "@types/jest": "24.0.18",
+    "@types/node": "~12.7.12",
+    "@typescript-eslint/eslint-plugin": "^2.3.3",
+    "@typescript-eslint/parser": "^2.3.3",
+    "commitlint": "^8.2.0",
+    "eslint": "^6.5.1",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-import": "^2.18.2",
+    "husky": "3.0.8",
+    "npm-run-all": "^4.1.5",
+    "prettier": "1.18.2",
+    "replace-json-property": "^1.4.1",
+    "semantic-release": "^15.13.24",
+    "ts-node": "~8.4.1",
+    "tsickle": "^0.37.0",
+    "typescript": "~3.5.3"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}
